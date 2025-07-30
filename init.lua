@@ -4,6 +4,9 @@ local modpath = core.get_modpath(modname)
 -- Translation setup using intllib
 local S = core.get_translator(modname)
 
+-- Load the wrapper.lua first to define the mod API
+dofile(modpath .. '/wrapper.lua')
+
 -- Remove /reload command as it's not reliable
 -- Delay loading mod.lua until player joins to ensure player object and world are ready
 local function load_mod()
