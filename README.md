@@ -1,466 +1,392 @@
-# CoderDojo Minetest: Dein Spickzettel
+# CoderDojo Minetest: Your Cheat Sheet
 
-Mit diesem Spickzettel lernst du, wie du deine eigene Minetest-Welt mit Code verändern kannst!
+## 🚀 Welcome to your first Lua programming mod!
 
-Als erstes kurz einmal die wichtigsten Tasten, die du in Luanti brauchen wirst:
+This mod was specifically designed to make programming in Lua with Luanti (Minetest) as easy as possible! Instead of overwhelming you with complicated APIs and technical details, this mod provides a simplified, beginner-friendly interface. So you can get started right away and bring your creative ideas to life in the Luanti world!
 
-- Bewegen: W, A, S, D (vorwärts, links, rückswärts, rechts)
-- Flugmodus An/Aus: K
-- Inventar öffnen: I
-- Pause-Menü: ESC
-- Befehle: Mit `/` , wichtige sind zum Beispiel `/time 6000` um die Zeit auf Tag zu setzen `/sethome` um das Zuhause zu setzen, `/home` um sich zum Zuhause zu teleportieren
+## 🌍 Language Support
 
-## Die Grundlagen von Lua
+This mod supports multiple languages! The interface will automatically adapt to your Luanti language settings:
+- **English**: Default language with all functions in English
+- **German (Deutsch)**: Available with German error messages and descriptions
+- **Other languages**: Use English as fallback
 
-Bevor wir loslegen, hier ein paar ganz wichtige Dinge:
+To change your language, go to Luanti Settings → Advanced Settings → language
 
-- **Befehle:** Jeder Befehl, den du Minetest gibst, beginnt mit `mod.`. Zum Beispiel `mod.chat("Hallo")`.
+## 📝 How to use this mod:
 
-- **Variablen:** Stell dir eine Variable wie eine Kiste vor, in der du etwas aufbewahren kannst, zum Beispiel einen Text oder eine Zahl.
+1. **Open IDE**: You need a development environment (IDE). You can either:
+   - **In Browser**: Go to [vscode.dev](https://vscode.dev) (works with Chrome, Edge and other Chromium-based browsers)
+   - **Desktop Version**: Install VSCode or another Lua IDE on your computer
+
+2. **Open Folder**: Open the mod folder in your IDE:
+   ```
+   /user/minetest/mods/LuaLearnMod/
+   ```
+
+3. **Programming**: Edit the file `mod.lua` - this is where you write your code!
+
+4. **Apply Changes**: To see your changes in the game:
+   - Save the `mod.lua` file in your IDE
+   - Exit to the main menu in Luanti
+   - Reload/rejoin your world
+   - Your new code will now be active!
+
+5. **Find Help**: This README is your cheat sheet - here you'll find all important commands and examples!
+
+---
+
+With this cheat sheet you'll learn how to change your own Minetest world with code!
+
+First, here are the most important keys you'll need in Luanti:
+
+- Move: W, A, S, D (forward, left, backward, right)
+- Flight mode On/Off: K
+- Open inventory: I
+- Pause menu: ESC
+- Commands: With `/`, important ones are for example `/time 6000` to set time to day `/sethome` to set home, `/home` to teleport home
+
+## The basics of Lua
+- Open inventory: I
+- Pause menu: ESC
+- Commands: With `/`, important ones are for example `/time 6000` to set time to day `/sethome` to set home, `/home` to teleport home
+
+## The basics of Lua
+
+Before we start, here are some very important things:
+
+- **Commands:** Every command you give Minetest starts with `mod.`. For example `mod.chat("Hello")`.
+
+- **Variables:** Think of a variable like a box where you can store something, for example text or a number.
 
   ```lua
-  -- In die Kiste 'gruss' legen wir den Text "Hallo Welt"
-  local gruss = "Hallo Welt!"
-  -- Jetzt können wir die Kiste benutzen, um den Gruss in den Chat zu schicken
-  mod.chat(gruss)
+  -- In the box 'greeting' we put the text "Hello World"
+  local greeting = "Hello World!"
+  -- Now we can use the box to send the greeting to chat
+  mod.chat(greeting)
   ```
 
-- **Positionen:** Um Minetest zu sagen, _wo_ etwas passieren soll, brauchen wir Koordinaten (x, y, z).
+- **Positions:** To tell Minetest _where_ something should happen, we need coordinates (x, y, z).
 
-  - **x:** nach links oder rechts (Ost/West)
-  - **y:** nach oben oder unten
-  - **z:** nach vorne oder hinten (Nord/Süd)
-    Wir schreiben das so: `mod.position(10, 5, 20)`
+  - **x:** left or right (East/West)
+  - **y:** up or down
+  - **z:** forward or backward (North/South)
+    We write it like this: `mod.position(10, 5, 20)`
 
-- **Entscheidungen mit `if`:** Manchmal soll dein Code nur etwas tun, _wenn_ eine bestimmte Bedingung wahr ist. Wie eine Entscheidung an einer Weggabelung.
+- **Decisions with `if`:** Sometimes your code should only do something _if_ a certain condition is true. Like a decision at a fork in the road.
 
   ```lua
-  -- Prüfe, ob der Spieler sehr hoch in der Luft ist
-  if mod.spieler_pos().y > 50 then
-    mod.chat("Achtung, du fällst tief!")
+  -- Check if the player is very high in the air
+  if mod.player_pos().y > 50 then
+    mod.chat("Watch out, you're falling deep!")
   else
-    mod.chat("Alles sicher hier unten.")
+    mod.chat("Everything safe down here.")
   end
   ```
 
-- **Wiederholungen mit `for`:** Eine `for`-Schleife ist super, um eine Aktion mehrmals zu wiederholen, ohne den Code immer wieder neu schreiben zu müssen.
+- **Repetitions with `for`:** A `for` loop is great for repeating an action multiple times without having to rewrite the code over and over.
 
-  - **Von-Bis zählen:** Sage dem Computer, wie oft er etwas tun soll.
+  - **Count from-to:** Tell the computer how many times to do something.
     ```lua
-    -- Baut eine kleine Treppe aus 5 Stein-Stufen nach oben
+    -- Builds a small staircase of 5 stone steps upward
     for i = 1, 5 do
-      mod.setze_block("default:stone", mod.position(i, i, 0))
-    end
-    ```
-  - **Eine Liste durchgehen:** Manchmal hast du eine Liste von Dingen und möchtest für jedes Ding in der Liste dasselbe tun.
-    ```lua
-    -- Eine Liste mit verschiedenen Blöcken
-    local bloecke = {"default:dirt", "default:stone", "default:sand", "default:glass"}
-    -- Gehe die Liste durch und schreibe jeden Block-Namen in den Chat
-    for block in each(bloecke) do
-      mod.chat("Ich habe in meiner Liste gefunden: " .. block)
+      mod.set_block("default:cobble", mod.position(i, i, 0))
     end
     ```
 
-- **Zufall:** Manchmal soll der Computer etwas Unvorhersehbares tun. Dafür gibt es `zufall`!
+## Chat & Communication
 
-  - **Zufallszahl:** Bekomme eine zufällige Zahl zwischen zwei Werten.
-    ```lua
-    -- Teleportiere dich an eine zufällige Höhe zwischen 10 und 50
-    local zufalls_hoehe = zufall(10, 50)
-    mod.teleportiere_spieler(mod.position(0, zufalls_hoehe, 0))
-    ```
-  - **Zufall aus einer Liste:** Gib dem Computer eine Liste und er sucht sich ein zufälliges Teil daraus aus.
-    ```lua
-    -- Eine Liste mit bunten Blöcken
-    local bunte_bloecke = {"default:goldblock", "wool:red", "wool:blue", "wool:green"}
-    -- Wähle einen zufälligen Block aus der Liste aus
-    local zufalls_block = zufall(bunte_bloecke)
-    -- Platziere den zufälligen Block direkt vor dem Spieler
-    mod.setze_block(zufalls_block, mod.spieler_pos())
-    ```
+**`mod.chat(message)`**
 
-- **Warten:** Um etwas erst nach einer gewissen Zeit auszuführen, kannst du `warte` verwenden.
-
+- **What it does:** Writes a message in the chat that everyone can see.
+- **What you need:**
+  - `message`: The text you want to send.
+- **Example:**
   ```lua
-  mod.chat("Das passiert sofort!")
-  warte(3, function()
-    mod.chat("Das passiert nach 3 Sekunden!")
-  end)
+  mod.chat("Hello everyone!")
   ```
 
-- **Kommentare:** Wenn du eine Zeile mit `--` beginnst, ignoriert der Computer sie. Das ist super, um dir selbst Notizen in den Code zu schreiben!
+**`mod.new_command(name, function)`**
+
+- **What it does:** Creates a new chat command that players can use with `/name`.
+- **What you need:**
+  - `name`: The name of the command (without `/`).
+  - `function`: The code that should run when someone uses the command.
+- **Example:**
   ```lua
-  -- Das hier ist eine Notiz und macht gar nichts.
-  ```
-
----
-
-## Alle Befehle im Überblick
-
-Hier sind alle Befehle, die du benutzen kannst. Zu jedem gibt es eine Erklärung und ein Beispiel zum Ausprobieren.
-
-### Chat & Chat-Befehle
-
-**`mod.chat(nachricht)`**
-
-- **Was es tut:** Schreibt eine Nachricht in den Chat, die alle sehen können.
-- **Was du brauchst:**
-  - `nachricht`: Der Text, den du senden willst (in Anführungszeichen!).
-- **Beispiel:**
-  ```lua
-  mod.chat("Willkommen in meiner Welt!")
-  ```
-
-**`mod.neuer_befehl(name, funktion)`**
-
-- **Was es tut:** Erfindet einen neuen Chat-Befehl, den du mit `/` benutzen kannst.
-- **Was du brauchst:**
-  - `name`: Der Name für deinen Befehl (z.B. "hallo").
-  - `funktion`: Der Code, der ausgeführt wird, wenn du den Befehl eingibst.
-- **Beispiel:**
-  ```lua
-  -- Erstellt den Befehl /zauber
-  mod.neuer_befehl("zauber", function()
-    mod.chat("Simsalabim!")
+  -- Creates the command /party
+  mod.new_command("party", function()
+    mod.chat("🎉 Party time! 🎉")
+    mod.particles(mod.player_pos(), "heart.png", 100, 5)
   end)
   ```
 
 ---
 
-### Welt bearbeiten
+## Building & Changing the World
 
-**`mod.setze_block(block_name, position)`**
+**`mod.set_block(block_name, position)`**
 
-- **Was es tut:** Setzt einen einzelnen Block an eine bestimmte Stelle.
-- **Was du brauchst:**
-  - `block_name`: Der Name des Blocks (z.B. `"default:stone"` oder `"default:glass"`).
-  - `position`: Der Ort, wo der Block hin soll.
-- **Beispiel:**
+- **What it does:** Places a specific block at a specific location.
+- **What you need:**
+  - `block_name`: The name of the block (e.g., `"default:stone"`).
+  - `position`: Where the block should be placed.
+- **Example:**
   ```lua
-  -- Setzt einen Glasblock an die Position x=10, y=5, z=20
-  mod.setze_block("default:glass", mod.position(10, 5, 20))
+  -- Places a diamond block 10 blocks above the player
+  local player_pos = mod.player_pos()
+  local above_player = mod.position(player_pos.x, player_pos.y + 10, player_pos.z)
+  mod.set_block("default:diamondblock", above_player)
   ```
 
-**`mod.wuerfel(block_name, mitte, groesse)`**
+**`mod.set_area(block_name, position1, position2)`**
 
-- **Was es tut:** Baut einen Würfel aus einem Material deiner Wahl.
-- **Was du brauchst:**
-  - `block_name`: Woraus der Würfel sein soll.
-  - `mitte`: Die Position, wo die Mitte des Würfels sein soll.
-  - `groesse`: Wie groß der Würfel sein soll (z.B. 5 für 5x5x5 Blöcke).
-- **Beispiel:**
+- **What it does:** Fills a rectangular area with a specific block.
+- **What you need:**
+  - `block_name`: Which block to use.
+  - `position1`: One corner of the area.
+  - `position2`: The second, opposite corner.
+- **Example:**
   ```lua
-  -- Baut einen Gold-Würfel der Größe 5 an der Spielerposition
-  mod.wuerfel("default:goldblock", mod.spieler_pos(), 5)
-  ```
-
-**`mod.kugel(block_name, mitte, radius)`**
-
-- **Was es tut:** Baut eine Kugel.
-- **Was du brauchst:**
-  - `block_name`: Das Material der Kugel.
-  - `mitte`: Die Position der Kugelmitte.
-  - `radius`: Wie groß die Kugel sein soll.
-- **Beispiel:**
-  ```lua
-  -- Baut eine riesige Glaskugel mit Radius 15 um den Spieler
-  mod.kugel("default:glass", mod.spieler_pos(), 15)
-  ```
-
-**`mod.setze_bereich(block_name, position1, position2)`**
-
-- **Was es tut:** Füllt einen ganzen Bereich zwischen zwei Ecken mit einem Block.
-- **Was du brauchst:**
-  - `block_name`: Das Material zum Füllen.
-  - `position1`: Die erste Ecke des Bereichs.
-  - `position2`: Die zweite, gegenüberliegende Ecke.
-- **Beispiel:**
-  ```lua
-  -- Erstellt ein Schwimmbecken aus Wasser
+  -- Creates a swimming pool of water
   local pos1 = mod.position(0, -1, 0)
   local pos2 = mod.position(10, -1, 10)
-  mod.setze_bereich("default:water_source", pos1, pos2)
+  mod.set_area("default:water_source", pos1, pos2)
   ```
 
-**`mod.entferne_block(position)`**
+**`mod.cube(block_name, position, size)`**
 
-- **Was es tut:** Macht einen Block weg (ersetzt ihn durch Luft).
-- **Was du brauchst:**
-  - `position`: Der Ort des Blocks, der weg soll.
-- **Beispiel:**
+- **What it does:** Creates a cube of blocks.
+- **What you need:**
+  - `block_name`: Which block to use.
+  - `position`: Center of the cube.
+  - `size`: How big the cube should be.
+- **Example:**
   ```lua
-  mod.entferne_block(mod.position(10, 5, 20))
+  -- Creates a 5x5x5 gold cube at player position
+  mod.cube("default:goldblock", mod.player_pos(), 5)
   ```
 
-**`mod.baum(position, typ)`**
+**`mod.sphere(block_name, position, radius)`**
 
-- **Was es tut:** Lässt an einer Stelle einen Baum wachsen.
-- **Was du brauchst:**
-  - `position`: Wo der Baum wachsen soll.
-  - `typ`: Welche Art von Baum (es gibt `baum`, `apfel`, `dschungel`, `urwaldriese`, `tanne`, `schneetanne`, `akazie`, `espe`, `busch`, `blaubeerbusch` und `riesenkaktus`).
-- **Beispiel:**
+- **What it does:** Creates a sphere of blocks.
+- **What you need:**
+  - `block_name`: Which block to use.
+  - `position`: Center of the sphere.
+  - `radius`: How big the sphere should be.
+- **Example:**
   ```lua
-  -- Lässt eine Tanne an der Spielerposition wachsen
-  mod.baum(mod.spieler_pos(), "tanne")
+  -- Creates a glass dome over the player
+  mod.sphere("default:glass", mod.player_pos(), 10)
   ```
 
----
+**`mod.tree(position, type)`**
 
-### Dinge finden & untersuchen
-
-**`mod.lese_block(position)`**
-
-- **Was es tut:** Schaut nach, welcher Block an einer bestimmten Stelle ist.
-- **Was du brauchst:**
-  - `position`: Der Ort, an dem du nachschauen willst.
-- **Beispiel:**
+- **What it does:** Grows a tree at a location.
+- **What you need:**
+  - `position`: Where the tree should grow.
+  - `type`: What kind of tree (options: `tree`, `apple`, `jungle`, `emergent`, `pine`, `snow_pine`, `acacia`, `aspen`, `bush`, `blueberry`, `large_cactus`).
+- **Example:**
   ```lua
-  -- Finde heraus, worauf der Spieler gerade steht
-  local spieler_pos = mod.spieler_pos()
-  local boden_pos = mod.position(spieler_pos.x, spieler_pos.y - 1, spieler_pos.z)
-  local block_name = mod.lese_block(boden_pos).name
-  mod.chat("Du stehst auf: " .. block_name)
-  ```
-
-**`mod.finde_block(startposition, entfernung, block_name)`**
-
-- **Was es tut:** Sucht den nächstgelegenen Block einer bestimmten Art in deiner Nähe.
-- **Was du brauchst:**
-  - `startposition`: Wo die Suche starten soll (z.B. `mod.spieler_pos()`).
-  - `entfernung`: Wie weit weg gesucht werden soll (eine Zahl).
-  - `block_name`: Welcher Block gesucht wird (z.B. `"default:diamond_ore"`).
-- **Beispiel:**
-  ```lua
-  -- Finde einen Diamanten in der Nähe (Umkreis von 10 Blöcken)
-  local diamant_pos = mod.finde_block(mod.spieler_pos(), 10, "default:diamond_ore")
-  if diamant_pos then
-    mod.chat("Ich habe einen Diamanten bei " .. dump(diamant_pos) .. " gefunden!")
-  end
-  ```
-
-**`mod.finde_bloecke(startposition, entfernung, block_name)`**
-
-- **Was es tut:** Sucht _alle_ Blöcke einer bestimmten Art in deiner Nähe.
-- **Was du brauchst:**
-  - Die gleichen wie bei `mod.finde_block`.
-- **Beispiel:**
-  ```lua
-  -- Verwandle alle Kohleblöcke in der Nähe in Diamanten
-  local alle_kohlebloecke = mod.finde_bloecke(mod.spieler_pos(), 5, "default:coal_ore")
-  -- Gehe die Liste mit allen gefundenen Positionen durch
-  for kohle_pos in each(alle_kohlebloecke) do
-    mod.setze_block("default:diamond_ore", kohle_pos)
-  end
+  -- Grows a pine tree at player position
+  mod.tree(mod.player_pos(), "pine")
   ```
 
 ---
 
-### Eigene Blöcke & Items erfinden
+## Finding & Investigating Things
 
-Das ist der spannendste Teil! Hier kannst du deine eigenen Blöcke und Gegenstände mit besonderen Fähigkeiten erfinden.
+**`mod.read_block(position)`**
 
-**`mod.neuer_block(name, bild, eigenschaften)`**
-
-- **Was es tut:** Erfindet einen komplett neuen Block, den du dann im Inventar findest und in der Welt platzieren kannst.
-- **Was du brauchst:**
-
-  - `name`: Der Name für deinen Block (z.B. "Party Block").
-  - `bild`: Der Name der Bild-Datei für das Aussehen (z.B. `"default_gold_block.png"`).
-  - `eigenschaften`: Eine Liste von Dingen, die der Block tun soll.
-
-- **Mögliche Eigenschaften - Nicht alle müssen angegeben werden!:**
-
-  - `rechtsklick = function(position, gegenstand_in_hand)`
-    - **Wann?** Wenn ein Spieler mit der rechten Maustaste auf den Block klickt.
-    - **Du bekommst:** Die `position` des Blocks.
-  - `linksklick = function(position)`
-    - **Wann?** Wenn ein Spieler mit der linken Maustaste auf den Block schlägt.
-    - **Du bekommst:** Die `position` des Blocks.
-  - `abbauen = function(position)`
-    - **Wann?** Genau in dem Moment, wenn der Block fertig abgebaut ist, aber bevor er verschwindet.
-    - **Du bekommst:** Die `position` des Blocks.
-
-- **Beispiel:** Ein Teleporter-Block, der dich an einen hohen Ort bringt.
+- **What it does:** Checks which block is at a specific location.
+- **What you need:**
+  - `position`: The location you want to check.
+- **Example:**
   ```lua
-  mod.neuer_block("Teleporter", "default_obsidian.png", {
-    rechtsklick = function(position)
-      mod.chat("Teleportiere!")
-      -- Teleportiert den Spieler 100 Blöcke über den Block
-      local ziel_pos = mod.position(position.x, position.y + 100, position.z)
-      mod.teleportiere_spieler(ziel_pos)
+  -- Find out what the player is standing on
+  local player_pos = mod.player_pos()
+  local ground_pos = mod.position(player_pos.x, player_pos.y - 1, player_pos.z)
+  local block_name = mod.read_block(ground_pos)
+  mod.chat("You're standing on: " .. block_name)
+  ```
+
+**`mod.find_block(start_position, distance, block_name)`**
+
+- **What it does:** Searches for the nearest block of a specific type near you.
+- **What you need:**
+  - `start_position`: Where the search should start (e.g., `mod.player_pos()`).
+  - `distance`: How far away to search (a number).
+  - `block_name`: Which block to search for (e.g., `"default:diamond_ore"`).
+- **Example:**
+  ```lua
+  -- Find a diamond nearby (radius of 10 blocks)
+  local diamond_pos = mod.find_block(mod.player_pos(), 10, "default:diamond_ore")
+  if diamond_pos then
+    mod.chat("I found a diamond at " .. dump(diamond_pos) .. "!")
+  end
+  ```
+
+---
+
+## Creating Your Own Blocks & Items
+
+This is the most exciting part! Here you can invent your own blocks and items with special abilities.
+
+**`mod.new_block(name, texture, properties)`**
+
+- **What it does:** Invents a completely new block that you can then find in the inventory and place in the world.
+- **What you need:**
+  - `name`: The name for your block (e.g., "Party Block").
+  - `texture`: The name of the image file for the appearance (e.g., `"default_gold_block.png"`).
+  - `properties`: A list of things the block should do.
+
+- **Possible properties - Not all need to be specified!:**
+  - `right_click = function(position)` - When a player right-clicks on the block.
+  - `left_click = function(position)` - When a player left-clicks on the block.
+  - `break_block = function(position)` - When the block is broken.
+
+- **Example:** A teleporter block that brings you to a high place.
+  ```lua
+  mod.new_block("Teleporter", "default_obsidian.png", {
+    right_click = function(position)
+      mod.chat("Teleporting!")
+      -- Teleports the player 100 blocks above the block
+      local target_pos = mod.position(position.x, position.y + 100, position.z)
+      mod.teleport_player(target_pos)
     end,
-    linksklick = function(position)
-      mod.chat("Das ist ein Teleporter! Klicke mit Rechts, um ihn zu benutzen.")
+    left_click = function(position)
+      mod.chat("This is a teleporter! Right-click to use it.")
     end,
-    abbauen = function(position)
-      mod.chat("Der Teleporter wurde zerstört!")
+    break_block = function(position)
+      mod.chat("The teleporter was destroyed!")
     end
   })
   ```
 
----
+**`mod.new_item(name, texture, properties)`**
 
-**`mod.neues_item(name, bild, eigenschaften)`**
+- **What it does:** Invents a new item that you can hold in your hand and use.
+- **What you need:**
+  - `name`: The name for your item (e.g., "Tree Magic Wand").
+  - `texture`: The name of the image file for the item (e.g., `"default_stick.png"`).
+  - `properties`: A list of things the item should do.
 
-- **Was es tut:** Erfindet einen neuen Gegenstand (Item), den du in der Hand halten und benutzen kannst. Du findest ihn danach im Inventar.
-- **Was du brauchst:**
+- **Possible properties:**
+  - `place = function(position, player)` - When you try to place the item like a block.
+  - `left_click = function(block_position, player)` - When you left-click on a block with the item.
+  - `right_click = function(player)` - When you right-click in the air with the item.
 
-  - `name`: Der Name für dein Item (z.B. "Baum-Zauberstab").
-  - `bild`: Der Name der Bild-Datei für das Item (z.B. `"default_stick.png"`).
-  - `eigenschaften`: Eine Liste von Dingen, die das Item tun soll.
-
-- **Mögliche Eigenschaften - Nicht alle müssen angegeben werden!:**
-
-  - `platzieren = function(position, spieler)`
-    - **Wann?** Wenn du versuchst, das Item wie einen Block auf den Boden oder an eine Wand zu setzen.
-    - **Du bekommst:** Die `position`, wo das Item platziert wird.
-  - `linksklick = function(position_vom_block, spieler)`
-    - **Wann?** Wenn du mit dem Item in der Hand mit der linken Maustaste auf einen Block in der Welt klickst.
-    - **Du bekommst:** Die `position_vom_block`, auf den du geklickt hast.
-  - `rechtsklick = function(spieler)`
-    - **Wann?** Wenn du mit dem Item in der Hand einen Rechtsklick machst (also in die Luft, nicht auf einen Block).
-
-- **Beispiel:** Ein Zauberstab, der Bäume wachsen lässt und Blöcke in Gold verwandelt.
-
+- **Example:** A magic wand that grows trees and turns blocks into gold.
   ```lua
-  mod.neues_item('Zauberstab der Natur', 'default_stick.png', {
-  -- Mit Rechtsklick einen Baum wachsen lassen
-  platzieren = function(position)
-    mod.baum(position, 'apfel')
-    mod.chat 'Ein Apfelbaum erscheint!'
-  end,
-  -- Mit Linksklick einen Block in Gold verwandeln
-  linksklick = function(position_vom_block)
-    mod.setze_block('default:goldblock', position_vom_block)
-    mod.chat 'In Gold verwandelt!'
-  end,
-  -- Mit Rechtsklick in die Luft einen Partikeleffekt machen
-  rechtsklick = function()
-    mod.partikel(mod.spieler_pos(), 'heart.png', 200, 10)
-  end,
+  mod.new_item('Nature Magic Wand', 'default_stick.png', {
+    -- Right-click to grow a tree
+    place = function(position)
+      mod.tree(position, 'apple')
+      mod.chat('An apple tree appears!')
+    end,
+    -- Left-click to turn a block into gold
+    left_click = function(block_position)
+      mod.set_block('default:goldblock', block_position)
+      mod.chat('Turned into gold!')
+    end,
+    -- Right-click in air for particle effect
+    right_click = function()
+      mod.particles(mod.player_pos(), 'heart.png', 200, 10)
+    end,
   })
-
   ```
 
 ---
 
-### Spieler & Physik
+## Player & Physics
 
-**`mod.spieler_pos()`**
+**`mod.player_pos()`**
 
-- **Was es tut:** Gibt dir die aktuelle Position des Spielers. Sehr nützlich!
-- **Beispiel:**
+- **What it does:** Gives you the current position of the player. Very useful!
+- **Example:**
   ```lua
-  -- Speichert die Spielerposition in einer "Kiste"
-  local meine_position = mod.spieler_pos()
-  -- Setzt einen Fackelblock genau unter den Spieler
-  mod.setze_block("default:torch", meine_position)
+  -- Save player position in a "box"
+  local my_position = mod.player_pos()
+  -- Place a torch block exactly under the player
+  mod.set_block("default:torch", my_position)
   ```
 
-**`mod.teleportiere_spieler(position)`**
+**`mod.teleport_player(position)`**
 
-- **Was es tut:** Teleportiert den Spieler an einen anderen Ort.
-- **Was du brauchst:**
-  - `position`: Wohin du reisen möchtest.
-- **Beispiel:**
+- **What it does:** Teleports the player to another location.
+- **What you need:**
+  - `position`: Where you want to travel.
+- **Example:**
   ```lua
-  -- Teleportiert den Spieler 100 Blöcke in die Luft
-  mod.teleportiere_spieler(mod.position(0, 100, 0))
+  -- Teleports the player 100 blocks into the air
+  mod.teleport_player(mod.position(0, 100, 0))
   ```
 
-**`mod.setze_schwerkraft(staerke)`**
+**`mod.set_gravity(strength)`**
 
-- **Was es tut:** Ändert die Schwerkraft.
-- **Was du brauchst:**
-  - `staerke`: Eine Zahl. `1` ist normal. Weniger als 1 (z.B. `0.1`) ist wie auf dem Mond, mehr als 1 (z.B. `3`) zieht dich stark nach unten.
-- **Beispiel:**
+- **What it does:** Changes gravity.
+- **What you need:**
+  - `strength`: A number. `1` is normal. Less than 1 (e.g., `0.1`) is like on the moon, more than 1 (e.g., `3`) pulls you down strongly.
+- **Example:**
   ```lua
-  -- Fast keine Schwerkraft!
-  mod.setze_schwerkraft(0.1)
-  ```
-
-**`mod.setze_sprungkraft(staerke)`**
-
-- **Was es tut:** Lässt dich höher springen.
-- **Was du brauchst:**
-  - `staerke`: Eine Zahl. `1` ist normal. `3` lässt dich super hoch springen!
-- **Beispiel:**
-  ```lua
-  -- Super-Sprung an!
-  mod.setze_sprungkraft(3)
-  ```
-
-**`mod.setze_geschwindigkeit(tempo)`**
-
-- **Was es tut:** Macht dich schneller oder langsamer.
-- **Was du brauchst:**
-  - `tempo`: Eine Zahl. `1` ist normal. `5` ist super schnell!
-- **Beispiel:**
-  ```lua
-  -- RENN!
-  mod.setze_geschwindigkeit(5)
+  -- Almost no gravity!
+  mod.set_gravity(0.1)
   ```
 
 ---
 
-### Besondere Effekte
+## Special Effects
 
-**`mod.partikel(position, bild, anzahl, reichweite)`**
+**`mod.particles(position, texture, amount, range)`**
 
-- **Was es tut:** Erzeugt coole Partikel-Effekte (wie Funken oder Rauch).
-- **Was du brauchst:**
-  - `position`: Wo die Partikel erscheinen sollen.
-  - `bild`: Das Aussehen der Partikel (z.B. `"fire_basic.png"`).
-  - `anzahl`: Wie viele Partikel es sein sollen.
-  - `reichweite`: Wie weit die Partikel sich verteilen.
-- **Beispiel:**
+- **What it does:** Creates cool particle effects (like sparks or smoke).
+- **What you need:**
+  - `position`: Where the particles should appear.
+  - `texture`: The appearance of the particles (e.g., `"fire_basic.png"`).
+  - `amount`: How many particles there should be.
+  - `range`: How far the particles spread.
+- **Example:**
   ```lua
-  -- Erzeugt 100 Feuer-Partikel um den Spieler
-  mod.partikel(mod.spieler_pos(), "fire_basic.png", 100, 3)
+  -- Creates 100 fire particles around the player
+  mod.particles(mod.player_pos(), "fire_basic.png", 100, 3)
   ```
 
-**`mod.pfeil(funktion)`**
+**`mod.repeat_every(seconds, function)`**
 
-- **Was es tut:** Führt einen Code aus, immer wenn ein Pfeil einen Block trifft.
-- **Was du brauchst:**
-  - `funktion`: Der Code, der ausgeführt wird. Er bekommt die Position, wo der Pfeil eingeschlagen ist.
-- **Beispiel:**
+- **What it does:** Executes code repeatedly after a certain time.
+- **What you need:**
+  - `seconds`: The interval in seconds between repetitions.
+  - `function`: The code that should be repeated.
+- **Example:**
   ```lua
-  -- Verwandelt jeden Block, den ein Pfeil trifft, in einen Goldblock
-  mod.pfeil(function(treffer_position)
-    mod.setze_block("default:goldblock", treffer_position)
+  -- Writes "Hello" in chat every 10 seconds
+  mod.repeat_every(10, function()
+    mod.chat("Another 10 seconds have passed!")
   end)
   ```
 
-**`mod.schiesse_projektil(partikel_bild, funktion, verzoegerung, reichweite)`**
+---
 
-- **Was es tut:** Schießt ein magisches Projektil in Blickrichtung.
-- **Was du brauchst:**
-  - `partikel_bild`: Das Aussehen der Flugbahn des Projektils.
-  - `funktion`: Was passieren soll, wenn das Projektil auftrifft.
-  - `verzoegerung`: Eine kleine Zahl für die Geschwindigkeit (z.B. `0.1`).
-  - `reichweite`: Wie weit das Projektil fliegt (z.B. `100`).
-- **Beispiel:**
+## Useful Helper Functions
+
+**`random(min, max)`**
+
+- **What it does:** Gives you a random number.
+- **Example:**
   ```lua
-  -- Ein Zauber, der beim Aufprall eine kleine Kugel aus Glas erschafft
-  mod.neuer_befehl("glaskugel", function()
-    mod.schiesse_projektil("bubble.png", function(treffer_position)
-      mod.kugel("default:glass", treffer_position, 3)
-    end, 0.05, 50)
-  end)
+  -- Random number between 1 and 10
+  local lucky_number = random(1, 10)
+  mod.chat("Your lucky number is: " .. lucky_number)
   ```
 
-**`mod.wiederhole_alle(sekunden, funktion)`**
+**`wait(seconds, function)`**
 
-- **Was es tut:** Führt einen Code immer wieder aus, nach einer bestimmten Zeit.
-- **Was du brauchst:**
-  - `sekunden`: Der Abstand in Sekunden zwischen den Wiederholungen.
-  - `funktion`: Der Code, der wiederholt werden soll.
-- **Beispiel:**
+- **What it does:** Waits a certain time, then executes code.
+- **Example:**
   ```lua
-  -- Schreibt alle 10 Sekunden "Hallo" in den Chat
-  mod.wiederhole_alle(10, function()
-    mod.chat("Schon wieder 10 Sekunden vorbei!")
+  mod.chat("Explosion in 3 seconds!")
+  wait(3, function()
+    mod.particles(mod.player_pos(), "fire_basic.png", 500, 10)
+    mod.chat("BOOM!")
   end)
   ```

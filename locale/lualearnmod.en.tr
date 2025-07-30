@@ -1,0 +1,11 @@
+# Textdomain: lualearnmod
+
+### init.lua ###
+Error in mod.lua: @1=Error in mod.lua: @1
+Reloads mod.lua (Live-Reload).=Reloads mod.lua (Live-Reload).
+mod.lua reloaded.=mod.lua reloaded.
+
+### wrapper.lua ###
+Tree type '@1' unknown!=Tree type '@1' unknown!
+XBows not found – arrow_pos disabled.=XBows not found – arrow_pos disabled.
+Invalid interval for mod.timer: @1=Invalid interval for mod.timer: @1
